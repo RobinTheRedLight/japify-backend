@@ -19,4 +19,6 @@ router.put(
   UserControllers.updateUser,
 );
 
+
+
 export const UserRoutes = router;
