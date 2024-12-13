@@ -38,17 +38,7 @@ const updateVocabularyValidationSchema = z.object({
   }),
 });
 
-const getVocabulariesValidationSchema = z.object({
-  query: z.object({
-    lessonNo: z
-      .string()
-      .regex(/^\d+$/, { message: 'Lesson number must be a positive integer.' })
-      .optional(),
-  }),
-});
-
 export const VocabularyValidation = {
   createVocabularyValidationSchema,
   updateVocabularyValidationSchema,
-  getVocabulariesValidationSchema,
 };

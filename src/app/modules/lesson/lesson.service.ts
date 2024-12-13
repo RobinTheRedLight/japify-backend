@@ -17,6 +17,11 @@ const getAllLessonsFromDB = async () => {
   return lessons;
 };
 
+const getAllLessonsByLessonNoFromDB = async (lessonNo: number) => {
+  const lessons = await Lesson.find({ number: lessonNo });
+  return lessons;
+};
+
 const getLessonByIdFromDB = async (id: string) => {
   const lesson = await Lesson.findById(id);
   if (!lesson) {
@@ -25,7 +30,10 @@ const getLessonByIdFromDB = async (id: string) => {
   return lesson;
 };
 
-const updateLessonFromDB = async (payload: { id: string; updateData: Partial<ILesson> }) => {
+const updateLessonFromDB = async (payload: {
+  id: string;
+  updateData: Partial<ILesson>;
+}) => {
   const { id, updateData } = payload;
   const lesson = await Lesson.findById(id);
   if (!lesson) {
@@ -61,4 +69,5 @@ export const LessonServices = {
   getLessonByIdFromDB,
   updateLessonFromDB,
   deleteLessonFromDB,
+  getAllLessonsByLessonNoFromDB,
 };

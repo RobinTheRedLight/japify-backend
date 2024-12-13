@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { LessonServices } from './lesson.service';
+import AppError from '../../errors/AppError';
 
 const createLesson = catchAsync(async (req, res) => {
   const lessonData = req.body;
@@ -16,14 +17,31 @@ const createLesson = catchAsync(async (req, res) => {
 });
 
 const getAllLessons = catchAsync(async (req, res) => {
-  const result = await LessonServices.getAllLessonsFromDB();
+  const { lessonNo } = req.query;
+  let result;
+  if (lessonNo) {
+    const lessonNumber = Number(lessonNo);
+    if (isNaN(lessonNumber)) {
+      throw new AppError(StatusCodes.BAD_REQUEST, 'Invalid lesson number.');
+    }
 
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Lessons retrieved successfully',
-    data: result,
-  });
+    result = await LessonServices.getAllLessonsByLessonNoFromDB(lessonNumber);
+
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: 'Lessons retrieved successfully',
+      data: result,
+    });
+  } else {
+    result = await LessonServices.getAllLessonsFromDB();
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: 'Lessons retrieved successfully',
+      data: result,
+    });
+  }
 });
 
 const getSingleLesson = catchAsync(async (req, res) => {

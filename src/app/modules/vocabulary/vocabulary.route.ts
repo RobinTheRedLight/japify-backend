@@ -11,34 +11,32 @@ router.post(
   '/',
   auth(USER_ROLE.admin),
   validateRequest(VocabularyValidation.createVocabularyValidationSchema),
-  VocabularyControllers.createVocabulary
+  VocabularyControllers.createVocabulary,
 );
 
 router.get(
   '/',
   auth(USER_ROLE.admin, USER_ROLE.user),
-  validateRequest(VocabularyValidation.getVocabulariesValidationSchema),
-  VocabularyControllers.getAllVocabularies
+  VocabularyControllers.getAllVocabularies,
 );
 
 router.get(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.user),
-  VocabularyControllers.getSingleVocabulary
+  VocabularyControllers.getSingleVocabulary,
 );
-
 
 router.put(
   '/:id',
   auth(USER_ROLE.admin),
   validateRequest(VocabularyValidation.updateVocabularyValidationSchema),
-  VocabularyControllers.updateVocabulary
+  VocabularyControllers.updateVocabulary,
 );
 
 router.delete(
   '/:id',
   auth(USER_ROLE.admin),
-  VocabularyControllers.deleteVocabulary
+  VocabularyControllers.deleteVocabulary,
 );
 
 export const VocabularyRoutes = router;
